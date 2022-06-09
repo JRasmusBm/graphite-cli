@@ -17,11 +17,22 @@
     "tmp": "^0.2.1",
     "yargs": "^17.5.1"
   },
+  "pkg": {
+    "scripts": "dist/src/**/*.js",
+    "assets": "dist/src/commands/**/*",
+    "targets": [
+      "node16-macos",
+      "node16-win",
+      "node16-linux"
+    ],
+    "outputPath": "pkg"
+  },
   "scripts": {
     "prepublishOnly": "yarn build",
     "lint": "eslint src --quiet --ext .ts --cache",
     "check": "tsc --noEmit",
     "build": "rm -rf dist/ && yarn lint && tsc",
+    "pkg": "yarn build && pkg dist/src/index.js -c package.json --public-packages \"*\"",
     "dev": "./scripts/installation/develop.sh",
     "cli": "node ./dist/src/index.js",
     "test": "tsc && yarn mocha \"dist/test/**/*.test.js\"  --parallel --jobs 8",
